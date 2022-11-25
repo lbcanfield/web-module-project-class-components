@@ -1,11 +1,41 @@
 import React from 'react'
 
-export default class Form extends React.Component {
+class Form extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      task: ''
+    }
+  }
+
+  handleChanges = event => {
+    event.preventDefault();
+    this.setState({ ...this.state, task: event.target.value })
+  };
+
+  submitForm = event => {
+    event.preventDefault();
+    this.props.addTask(event, this.state.task);
+    this.setState({ ...this.state, task: '' });
+  }
+
+
+
   render() {
     return (
-      <div>
-        Form
-      </div>
-    )
+      <form onSubmit={this.submitForm}>
+        <input
+          type="text"
+          name="task"
+          placeholder='Type todo'
+          value={this.state.task}
+          onChange={this.handleChanges}
+        />
+        <button>Add</button>
+      </form>
+    );
   }
 }
+
+
+export default Form;
